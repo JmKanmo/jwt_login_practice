@@ -1,4 +1,4 @@
-package com.practice.repository;
+package com.practice.repository.token;
 
 import com.practice.domain.token.LogoutAccessToken;
 import org.springframework.data.repository.CrudRepository;

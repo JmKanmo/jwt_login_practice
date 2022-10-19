@@ -17,7 +17,7 @@ public class ExceptionHandlerAdvice {
     public ResponseEntity<ExceptionDto> exceptionHandler(Exception exception, Model model, HttpServletResponse httpServletResponse) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionDto.builder().statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
-                        .message(String.format("에러 메시지: %s", exception.getMessage()))
+                        .message(String.format("%s", exception.getMessage()))
                         .build());
     }
 }

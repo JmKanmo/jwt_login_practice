@@ -2,18 +2,13 @@ package com.practice.util;
 
 import com.practice.exception.message.ExceptionMessage;
 import com.practice.exception.model.TokenCheckFailException;
-import com.practice.repository.LogoutAccessTokenRepository;
-import com.practice.service.LogoutAccessTokenService;
-import com.practice.service.MemberService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
+import com.practice.service.token.LogoutAccessTokenService;
+import com.practice.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;

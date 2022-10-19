@@ -1,4 +1,4 @@
-package com.practice.service;
+package com.practice.service.member;
 
 import com.practice.domain.Member;
 import com.practice.domain.token.LogoutAccessToken;
@@ -9,20 +9,18 @@ import com.practice.exception.model.TokenCheckFailException;
 import com.practice.exception.model.UserAuthException;
 import com.practice.model.LoginModel;
 import com.practice.model.MemberModel;
-import com.practice.repository.LogoutAccessTokenRepository;
-import com.practice.repository.MemberRepository;
+import com.practice.repository.member.MemberRepository;
+import com.practice.service.token.LogoutAccessTokenService;
+import com.practice.service.token.RefreshTokenService;
 import com.practice.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.memberRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("couldn't find user -> " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("회원 정보를 찾을 수 없습니다."));
     }
 
 
@@ -58,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
         String username = memberModel.getUsername();
 
         if (this.memberRepository.existsByUsername(username)) {
-            throw new UserAuthException("이미 존재하는 회원입니다. -> " + username);
+            throw new UserAuthException("이미 존재하는 회원입니다.");
         }
 
         memberModel.setPassword(this.passwordEncoder.encode(memberModel.getPassword()));
@@ -69,7 +67,7 @@ public class MemberServiceImpl implements MemberService {
         String username = loginModel.getUsername();
 
         if (!this.memberRepository.existsByUsername(username)) {
-            throw new UserAuthException("회원 정보를 찾을 수 없습니다. -> " + username);
+            throw new UserAuthException("회원 정보를 찾을 수 없습니다");
         }
 
         Member member = this.memberRepository.findByUsername(username).get();

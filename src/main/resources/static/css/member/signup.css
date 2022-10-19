@@ -1,0 +1,31 @@
+.signup_container {
+    border: 1px solid #d9d9d9;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.signup_form_title {
+    color: #7ec7eb;
+    font-size: 24px;
+}
+
+.signup_form {
+    position: relative;
+    padding: 10px;
+}
+
+.input_div {
+    padding: 10px;
+}
+
+.redirect_link {
+    position: absolute;
+    right: 30px;
+    bottom: 10px;
+    margin-top: 35px;
+    margin-left: 50px;
+    font-size: 15px;
+    color: #8bc34a;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <th:block th:replace="/common/config :: config"></th:block>
+    <link th:href="@{/css/member/signup.css}" type="text/css" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/member/signup.js}"></script>
+</head>
+
+<body>
+<div class="signup_container">
+    <h1 class="signup_form_title">회원가입 실습</h1>
+
+    <form method="post" class="signup_form" id="signupForm" name="signupForm" action="/member/signup">
+
+        <div class="input_div clear_fix">
+            <label for="user_name" class="common_input_label">
+                <span class="blind">아이디(유저명)</span>
+            </label>
+
+            <input type="text" id="user_name" class="common_input_form" maxlength="128" minlength="5"
+                   placeholder="유저명을 입력해주세요."
+                   name="username" required>
+        </div>
+
+        <div class="input_div clear_fix">
+            <label for="user_password" class="common_input_label">
+                <span class="blind">비밀번호</span>
+            </label>
+
+            <input type="password" id="user_password" name="password" class="common_input_form"
+                   maxlength="20" minlength="8" placeholder="비밀번호를 입력해주세요." autocomplete="on" required>
+        </div>
+
+        <div class="input_div clear_fix">
+            <label for="user_intro" class="common_input_label">
+                <span class="blind">소개</span>
+            </label>
+
+            <textarea name="intro" id="user_intro" cols="30" rows="10" placeholder="소개를 입력하세요."></textarea>
+        </div>
+
+        <button type="button" class="common_submit_button" id="signup_form_button">
+            회원가입
+        </button>
+
+        <a href="/main" class="redirect_link">
+            메인화면으로 이동
+        </a>
+
+        <a href="/main" class="redirect_link">
+            메인화면으로 이동
+        </a>
+    </form>
+</div>
+</body>
+</html>

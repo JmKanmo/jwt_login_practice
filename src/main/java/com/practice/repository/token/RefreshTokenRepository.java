@@ -1,4 +1,4 @@
-package com.practice.repository;
+package com.practice.repository.token;
 
 import com.practice.domain.token.RefreshToken;
 import org.springframework.data.repository.CrudRepository;

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메인화면</title>
+    <link th:href="@{/css/main/test.css}" type="text/css" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/main/test.js}"></script>
+</head>
+
+<body>
+<div class="test_container">
+    <h1>테스트 실습</h1>
+
+    <ul class="test_list">
+        <li>
+            <a href="/member/signup">회원가입</a>
+        </li>
+
+        <li>
+            <a href="/member/login">로그인</a>
+        </li>
+
+        <li>
+            <a href="/global/trade">트레이드</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

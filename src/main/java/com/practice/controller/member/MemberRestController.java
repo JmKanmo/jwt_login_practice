@@ -1,11 +1,6 @@
-package com.practice.controller;
+package com.practice.controller.member;
 
-import com.practice.domain.token.RefreshToken;
-import com.practice.dto.TokenDto;
-import com.practice.service.MemberService;
-import com.practice.service.RefreshTokenService;
-import com.practice.util.JwtTokenUtil;
-import com.practice.domain.Member;
+import com.practice.service.member.MemberService;
 import com.practice.model.LoginModel;
 import com.practice.model.MemberModel;
 import lombok.RequiredArgsConstructor;
@@ -15,24 +10,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
 
 @Slf4j
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
-public class MemberController {
+public class MemberRestController {
     private final MemberService memberService;
 
     // 요청 방식은 Content-Type 상관없이 ...
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody MemberModel memberModel) {
+    public ResponseEntity<?> signup(MemberModel memberModel) {
         var result = this.memberService.register(memberModel);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginModel loginModel) {
+    public ResponseEntity<?> login(LoginModel loginModel) {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.login(loginModel));
     }
 

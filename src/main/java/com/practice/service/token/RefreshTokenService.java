@@ -1,14 +1,12 @@
-package com.practice.service;
+package com.practice.service.token;
 
 import com.practice.domain.token.RefreshToken;
 import com.practice.exception.message.ExceptionMessage;
 import com.practice.exception.model.TokenNotFoundException;
-import com.practice.repository.RefreshTokenRepository;
+import com.practice.repository.token.RefreshTokenRepository;
 import com.practice.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

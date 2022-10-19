@@ -1,7 +1,7 @@
-package com.practice.service;
+package com.practice.service.token;
 
 import com.practice.domain.token.LogoutAccessToken;
-import com.practice.repository.LogoutAccessTokenRepository;
+import com.practice.repository.token.LogoutAccessTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

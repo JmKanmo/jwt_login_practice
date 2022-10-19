@@ -1,8 +1,7 @@
-package com.practice.controller;
+package com.practice.controller.trade;
 
 import com.practice.exception.message.ExceptionMessage;
 import com.practice.exception.model.UserAuthException;
-import com.practice.model.MemberModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/global")
 @RequiredArgsConstructor
-public class GlobalController {
+public class GlobalRestController {
     @PostMapping("/trade")
     public ResponseEntity<?> trade(Principal principal) {
         if (principal == null || principal.getName() == null) {

@@ -1,4 +1,4 @@
-package com.practice.service;
+package com.practice.service.member;
 
 import com.practice.domain.Member;
 import com.practice.dto.TokenDto;
