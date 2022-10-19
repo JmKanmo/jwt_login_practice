@@ -1,18 +1,20 @@
 package com.practice.controller;
 
-import com.practice.config.jwt.TokenProvider;
+import com.practice.domain.token.RefreshToken;
+import com.practice.dto.TokenDto;
+import com.practice.service.MemberService;
+import com.practice.service.RefreshTokenService;
+import com.practice.util.JwtTokenUtil;
 import com.practice.domain.Member;
 import com.practice.model.LoginModel;
 import com.practice.model.MemberModel;
-import com.practice.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 
 @Slf4j
@@ -20,20 +22,27 @@ import java.util.ArrayList;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
-    private final MemberServiceImpl memberServiceImpl;
-    private final TokenProvider tokenProvider;
+    private final MemberService memberService;
 
-    // 요청 방식은 JSON, WWW3-unicode 등등 상관없음.
+    // 요청 방식은 Content-Type 상관없이 ...
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody MemberModel memberModel) {
-        var result = this.memberServiceImpl.register(memberModel);
+        var result = this.memberService.register(memberModel);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> signin(@RequestBody LoginModel loginModel) {
-        Member member = this.memberServiceImpl.authenticate(loginModel);
-        String token = this.tokenProvider.generateToken(member.getUsername(), new ArrayList<>());
-        return ResponseEntity.ok(token);
+    public ResponseEntity<?> login(@RequestBody LoginModel loginModel) {
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.login(loginModel));
+    }
+
+    @PostMapping("/logout")
+    public void logout(@RequestHeader("Authorization") String accessToken) {
+        memberService.logout(accessToken);
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<?> reissue(@RequestHeader("RefreshToken") String refreshToken, Principal principal) {
+        return ResponseEntity.ok(memberService.reissue(refreshToken, principal));
     }
 }

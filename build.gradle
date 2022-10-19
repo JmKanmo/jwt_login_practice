@@ -40,6 +40,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.session:spring-session-data-redis'
     // JWT 관련 의존성
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.7.2'
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'

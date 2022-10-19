@@ -40,9 +40,6 @@ spring:
 
   # jwt secret key (HashVault-OpenSource)
   jwt:
-    header: Authorization
-    prefix: Bearer-
-    expire_time: 3600000
     secret: RWEPKFSDF3242332!@#vxvcx#$$@gFDGDFGDSFSWMeassdsaweaea
 
 server:
