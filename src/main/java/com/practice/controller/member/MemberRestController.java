@@ -1,5 +1,8 @@
 package com.practice.controller.member;
 
+import com.practice.dto.JwtTokenDto;
+import com.practice.exception.message.ExceptionMessage;
+import com.practice.exception.model.UserAuthException;
 import com.practice.service.member.MemberService;
 import com.practice.model.LoginModel;
 import com.practice.model.MemberModel;
@@ -18,11 +21,27 @@ import java.security.Principal;
 public class MemberRestController {
     private final MemberService memberService;
 
+    @GetMapping("/info")
+    public ResponseEntity<?> info(Principal principal) {
+        if (principal == null || principal.getName() == null) {
+            throw new UserAuthException(ExceptionMessage.NOT_AUTHORIZED_ACCESS);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.findMemberById(principal.getName()));
+    }
+
     // 요청 방식은 Content-Type 상관없이 ...
     @PostMapping("/signup")
     public ResponseEntity<?> signup(MemberModel memberModel) {
         var result = this.memberService.register(memberModel);
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/authorize")
+    public ResponseEntity<?> authorize(@RequestHeader("Authorization") String accessToken, Principal principal) {
+        if (principal == null || principal.getName() == null) {
+            throw new UserAuthException(ExceptionMessage.NOT_AUTHORIZED_ACCESS);
+        }
+        return ResponseEntity.ok(JwtTokenDto.from(accessToken));
     }
 
     @PostMapping("/login")
@@ -36,7 +55,7 @@ public class MemberRestController {
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader("RefreshToken") String refreshToken, Principal principal) {
+    public ResponseEntity<?> reissue(@CookieValue("RefreshToken") String refreshToken, Principal principal) {
         return ResponseEntity.ok(memberService.reissue(refreshToken, principal));
     }
 }

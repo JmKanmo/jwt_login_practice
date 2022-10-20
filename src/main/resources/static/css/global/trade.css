@@ -1,0 +1,34 @@
+.user_profile_container {
+    display: none;
+    width: 100px;
+    border: 1px solid #d9d9d9;
+    padding: 20px;
+}
+
+.common_text_style {
+    font-size: 15px;
+    color: #607d8b;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.login_link {
+    display: none;
+}
+
+.trade_util_container {
+    position: relative;
+    border: 1px solid #607d8b;
+    margin-top: 20px;
+    width: 300px;
+    height: 300px;
+    padding: 15px;
+}
+
+.main_link {
+    font-size: 17px;
+    color: darkcyan;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}

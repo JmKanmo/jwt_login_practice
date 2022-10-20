@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>트레이드</title>
+    <th:block th:replace="/common/config :: config"></th:block>
+    <link th:href="@{/css/global/trade.css}" type="text/css" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/global/trade.js}"></script>
+</head>
+
+<body>
+<div class="trade_container">
+    <h1 class="trade_title">무역거래</h1>
+
+    <div class="user_profile_container" id="user_profile_container">
+        <h3 class="common_text_style">로그인 사용자 정보</h3>
+        <p class="common_text_style" id="user_info_name"></p>
+        <p class="common_text_style" id="user_info_intro"></p>
+    </div>
+
+    <a href="/member/login" class="login_link" id="login_link">로그인 링크</a>
+
+    <div class="trade_util_container">
+        <button id="trade_result_inquire_button">트레이드 조회</button>
+        <p><span>거래 신청 결과:</span> <span id="trade_request_text"></span></p>
+        <p id="trade_indicators"></p>
+        <a href="/main" class="main_link">메인화면으로 이동</a>
+    </div>
+</div>
+</body>
+</html>

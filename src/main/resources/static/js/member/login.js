@@ -17,7 +17,8 @@ class LoginController extends UtilController {
                 if ((status >= 400 && status <= 500) || (status > 500)) {
                     this.showToastMessage(responseValue["message"]);
                 } else {
-                    console.log("hello world");
+                    this.setLocalStorage("Authorization", responseValue["grantType"] + responseValue["accessToken"]);
+                    window.location = document.referrer;
                 }
             });
 

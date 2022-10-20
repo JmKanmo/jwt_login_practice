@@ -3,7 +3,8 @@ package com.practice.service.member;
 import com.practice.domain.Member;
 import com.practice.domain.token.LogoutAccessToken;
 import com.practice.domain.token.RefreshToken;
-import com.practice.dto.TokenDto;
+import com.practice.dto.JwtTokenDto;
+import com.practice.dto.MemberDto;
 import com.practice.exception.message.ExceptionMessage;
 import com.practice.exception.model.TokenCheckFailException;
 import com.practice.exception.model.UserAuthException;
@@ -36,11 +37,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional(readOnly = true)
     @Override
-    public TokenDto login(LoginModel loginModel) {
+    public JwtTokenDto login(LoginModel loginModel) {
         Member member = authenticate(loginModel);
         String token = this.jwtTokenUtil.generateToken(member.getUsername(), JwtTokenUtil.ACCESS_TOKEN_EXPIRE_TIME);
         RefreshToken refreshToken = refreshTokenService.saveRefreshToken(member.getUsername(), JwtTokenUtil.REFRESH_TOKEN_EXPIRE_TIME);
-        return TokenDto.from(token, refreshToken.getRefreshToken());
+        jwtTokenUtil.setRefreshTokenAtCookie(refreshToken);
+        return JwtTokenDto.from(token);
     }
 
     @Transactional(readOnly = true)
@@ -87,11 +89,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public TokenDto reissue(String refreshToken, Principal principal) {
+    public JwtTokenDto reissue(String refreshToken, Principal principal) {
         if (principal == null || principal.getName() == null) {
             throw new UserAuthException(ExceptionMessage.NOT_AUTHORIZED_ACCESS);
         }
-        refreshToken = jwtTokenUtil.resolveToken(refreshToken);
+
         String curUserName = principal.getName();
         RefreshToken redisRefreshToken = refreshTokenService.findRefreshTokenById(curUserName);
 
@@ -101,12 +103,21 @@ public class MemberServiceImpl implements MemberService {
         return createRefreshToken(refreshToken, curUserName);
     }
 
-    private TokenDto createRefreshToken(String refreshToken, String username) {
+    @Transactional(readOnly = true)
+    @Override
+    public MemberDto findMemberById(String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow(() -> new UserAuthException(ExceptionMessage.USER_NOT_FOUND));
+        return MemberDto.from(member);
+    }
+
+    private JwtTokenDto createRefreshToken(String refreshToken, String username) {
         if (lessThanReissueExpirationTimesLeft(refreshToken)) {
             String accessToken = jwtTokenUtil.generateToken(username, JwtTokenUtil.ACCESS_TOKEN_EXPIRE_TIME);
-            return TokenDto.from(accessToken, refreshTokenService.saveRefreshToken(username, JwtTokenUtil.REFRESH_TOKEN_EXPIRE_TIME).getRefreshToken());
+            RefreshToken newRedisToken = refreshTokenService.saveRefreshToken(username, JwtTokenUtil.REFRESH_TOKEN_EXPIRE_TIME);
+            jwtTokenUtil.setRefreshTokenAtCookie(newRedisToken);
+            return JwtTokenDto.from(accessToken);
         }
-        return TokenDto.from(jwtTokenUtil.generateToken(username, JwtTokenUtil.ACCESS_TOKEN_EXPIRE_TIME), refreshToken);
+        return JwtTokenDto.from(jwtTokenUtil.generateToken(username, JwtTokenUtil.ACCESS_TOKEN_EXPIRE_TIME));
     }
 
     private boolean lessThanReissueExpirationTimesLeft(String refreshToken) {

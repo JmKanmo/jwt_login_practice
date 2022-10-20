@@ -10,16 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TokenDto {
+public class JwtTokenDto {
     private String grantType;
     private String accessToken;
-    private String refreshToken;
 
-    public static TokenDto from(String accessToken, String refreshToken) {
-        return TokenDto.builder()
-                .grantType(JwtTokenUtil.TOKEN_HEADER + ":" + JwtTokenUtil.TOKEN_PREFIX)
+    public static JwtTokenDto from(String accessToken) {
+        return JwtTokenDto.builder()
+                .grantType(JwtTokenUtil.TOKEN_PREFIX)
                 .accessToken(accessToken)
-                .refreshToken(refreshToken)
                 .build();
     }
 }

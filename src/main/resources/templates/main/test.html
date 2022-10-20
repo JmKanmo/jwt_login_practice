@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>메인화면</title>
+    <th:block th:replace="/common/config :: config"></th:block>
     <link th:href="@{/css/main/test.css}" type="text/css" rel="stylesheet">
     <script type="text/javascript" th:src="@{/js/main/test.js}"></script>
 </head>
@@ -12,15 +13,25 @@
     <h1>테스트 실습</h1>
 
     <ul class="test_list">
-        <li>
+        <li class="test_list_block">
             <a href="/member/signup">회원가입</a>
         </li>
 
-        <li>
-            <a href="/member/login">로그인</a>
+        <li class="test_list_block">
+            <a href="/member/login" id="login_link">로그인</a>
+
+            <div class="user_info_container" id="user_info_container">
+                <h3>사용자 정보 칸</h3>
+                <p id="user_info_name"></p>
+                <p id="user_info_intro"></p>
+            </div>
         </li>
 
-        <li>
+        <li class="test_list_block">
+            <button class="logout_button" id="logout_button">로그아웃</button>
+        </li>
+
+        <li class="test_list_block">
             <a href="/global/trade">트레이드</a>
         </li>
     </ul>
