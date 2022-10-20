@@ -1,7 +1,7 @@
 ## 🌐 Spring Security + JWT + Redis를 이용한 인증 실습
 
 ### 프로젝트 개요
-🌐 Spring Security + JWT + Redis를 이용한 인증 과정을 진행한다.
+Spring Security + JWT + Redis를 이용한 인증 과정을 진행한다.
 
 
 ### 🛠 기술 스택
